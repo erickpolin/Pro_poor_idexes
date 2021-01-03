@@ -339,3 +339,422 @@ shared_2010_2014_consumo<-shared_2010_2014_consumo%>%
 
 round(shared_2010_2014_consumo[3],2)
 
+
+########### poverty lines ###############
+########## 2010 ############
+library(foreign)
+library(tidyverse)
+library(plotly)
+library(htmlwidgets)
+library(reshape2)
+library(survey)
+options(survey.lonely.psu="adjust")
+
+###2010 rurales
+
+
+Conc_2010<-Conc_2010%>%
+  mutate(Canasta_rural_extrema=712.77*3,
+         Canasta_rural_moderada=1378.05*3,
+         Canasta_urbana_extrema=1012.12*3,
+         Canasta_urbana_moderada=2185.79*3)
+
+Conc_2010<-Conc_2010%>%
+  mutate(linea_de_pobreza_rural_extrema=ifelse(Small==1,Canasta_rural_extrema,0),
+         linea_de_pobreza_rural_moderada=ifelse(Small==1,Canasta_rural_moderada,0),
+         linea_de_pobreza_urbana_extrema=ifelse(Small==0,Canasta_urbana_extrema,0),
+         linea_de_pobreza_urbana_moderada=ifelse(Small==0,Canasta_urbana_moderada,0),
+         pobreza_rural_extrema_por_ingreso=ifelse(ing_cor<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_ingreso=ifelse(ing_cor<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_ingreso=ifelse(ing_cor<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_ingreso=ifelse(ing_cor<linea_de_pobreza_urbana_moderada,1,0),
+         pobreza_rural_extrema_por_consumo=ifelse(gasto<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_consumo=ifelse(gasto<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_consumo=ifelse(gasto<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_consumo=ifelse(gasto<linea_de_pobreza_urbana_moderada,1,0))
+
+Conc_2010_rural<-Conc_2010%>%
+  filter(Small==1)
+
+design_2010_rural<-svydesign(id=~upm,strata = ~est_dis, weights = ~factor,data = Conc_2010_rural)
+
+pobreza_rural_extrema_2010_por_ingreso<-round(svymean(~pobreza_rural_extrema_por_ingreso, design=design_2010_rural)*100,2)
+
+pobreza_rural_extrema_2010_por_ingreso
+
+pobreza_rural_moderada_2010_por_ingreso<-round(svymean(~pobreza_rural_moderada_por_ingreso, design=design_2010_rural)*100,2)
+
+pobreza_rural_moderada_2010_por_ingreso
+
+
+pobreza_rural_extrema_2010_por_consumo<-round(svymean(~pobreza_rural_extrema_por_consumo, design=design_2010_rural)*100,2)
+
+pobreza_rural_extrema_2010_por_consumo
+
+pobreza_rural_moderada_2010_por_consumo<-round(svymean(~pobreza_rural_moderada_por_consumo, design=design_2010_rural)*100,2)
+
+pobreza_rural_moderada_2010_por_consumo
+
+
+
+#### Urbanos
+
+
+
+Conc_2010_urbana<-Conc_2010%>%
+  filter(Small==0)
+
+design_2010_urbano<-svydesign(id=~upm,strata = ~est_dis, weights = ~factor,data = Conc_2010_urbana)
+
+pobreza_urbana_extrema_2010_por_ingreso<-round(svymean(~pobreza_urbana_extrema_por_ingreso, design=design_2010_urbano)*100,2)
+
+pobreza_urbana_extrema_2010_por_ingreso
+
+pobreza_urbana_moderada_2010_por_ingreso<-round(svymean(~pobreza_urbana_moderada_por_ingreso, design=design_2010_urbano)*100,2)
+
+pobreza_urbana_moderada_2010_por_ingreso
+
+pobreza_urbana_extrema_2010_por_consumo<-round(svymean(~pobreza_urbana_extrema_por_consumo, design=design_2010_urbano)*100,2)
+
+pobreza_urbana_extrema_2010_por_consumo
+
+pobreza_urbana_moderada_2010_por_consumo<-round(svymean(~pobreza_urbana_moderada_por_consumo, design=design_2010_urbano)*100,2)
+
+pobreza_urbana_moderada_2010_por_consumo
+
+
+########## 2012 ############
+library(foreign)
+library(tidyverse)
+library(plotly)
+library(htmlwidgets)
+library(reshape2)
+library(survey)
+options(survey.lonely.psu="adjust")
+
+###2012 rurales
+
+
+Conc_2012<-Conc_2012%>%
+  mutate(Canasta_rural_extrema=800.21*3,
+         Canasta_rural_moderada=1488.52*3,
+         Canasta_urbana_extrema=1125.39*3,
+         Canasta_urbana_moderada=2324.71*3)
+
+Conc_2012<-Conc_2012%>%
+  mutate(linea_de_pobreza_rural_extrema=ifelse(Small==1,Canasta_rural_extrema,0),
+         linea_de_pobreza_rural_moderada=ifelse(Small==1,Canasta_rural_moderada,0),
+         linea_de_pobreza_urbana_extrema=ifelse(Small==0,Canasta_urbana_extrema,0),
+         linea_de_pobreza_urbana_moderada=ifelse(Small==0,Canasta_urbana_moderada,0),
+         pobreza_rural_extrema_por_ingreso=ifelse(ing_cor<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_ingreso=ifelse(ing_cor<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_ingreso=ifelse(ing_cor<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_ingreso=ifelse(ing_cor<linea_de_pobreza_urbana_moderada,1,0),
+         pobreza_rural_extrema_por_consumo=ifelse(gasto<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_consumo=ifelse(gasto<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_consumo=ifelse(gasto<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_consumo=ifelse(gasto<linea_de_pobreza_urbana_moderada,1,0))
+
+Conc_2012_rural<-Conc_2012%>%
+  filter(Small==1)
+
+design_2012_rural<-svydesign(id=~upm,strata = ~est_dis, weights = ~factor,data = Conc_2012_rural)
+
+pobreza_rural_extrema_2012_por_ingreso<-round(svymean(~pobreza_rural_extrema_por_ingreso, design=design_2012_rural)*100,2)
+
+pobreza_rural_extrema_2012_por_ingreso
+
+pobreza_rural_moderada_2012_por_ingreso<-round(svymean(~pobreza_rural_moderada_por_ingreso, design=design_2012_rural)*100,2)
+
+pobreza_rural_moderada_2012_por_ingreso
+
+
+pobreza_rural_extrema_2012_por_consumo<-round(svymean(~pobreza_rural_extrema_por_consumo, design=design_2012_rural)*100,2)
+
+pobreza_rural_extrema_2012_por_consumo
+
+pobreza_rural_moderada_2012_por_consumo<-round(svymean(~pobreza_rural_moderada_por_consumo, design=design_2012_rural)*100,2)
+
+pobreza_rural_moderada_2012_por_consumo
+
+
+
+#### Urbanos
+
+
+
+Conc_2012_urbana<-Conc_2012%>%
+  filter(Small==0)
+
+design_2012_urbano<-svydesign(id=~upm,strata = ~est_dis, weights = ~factor,data = Conc_2012_urbana)
+
+pobreza_urbana_extrema_2012_por_ingreso<-round(svymean(~pobreza_urbana_extrema_por_ingreso, design=design_2012_urbano)*100,2)
+
+pobreza_urbana_extrema_2012_por_ingreso
+
+pobreza_urbana_moderada_2012_por_ingreso<-round(svymean(~pobreza_urbana_moderada_por_ingreso, design=design_2012_urbano)*100,2)
+
+pobreza_urbana_moderada_2012_por_ingreso
+
+pobreza_urbana_extrema_2012_por_consumo<-round(svymean(~pobreza_urbana_extrema_por_consumo, design=design_2012_urbano)*100,2)
+
+pobreza_urbana_extrema_2012_por_consumo
+
+pobreza_urbana_moderada_2012_por_consumo<-round(svymean(~pobreza_urbana_moderada_por_consumo, design=design_2012_urbano)*100,2)
+
+pobreza_urbana_moderada_2012_por_consumo
+
+
+
+
+########## 2014 ############
+library(foreign)
+library(tidyverse)
+library(plotly)
+library(htmlwidgets)
+library(reshape2)
+library(survey)
+options(survey.lonely.psu="adjust")
+
+###2014 rurales
+
+
+Conc_2014<-Conc_2014%>%
+  mutate(Canasta_rural_extrema=868.17*3,
+         Canasta_rural_moderada=1613*3,
+         Canasta_urbana_extrema=1242.57*3,
+         Canasta_urbana_moderada=2537.05*3)
+
+Conc_2014<-Conc_2014%>%
+  mutate(linea_de_pobreza_rural_extrema=ifelse(Small==1,Canasta_rural_extrema,0),
+         linea_de_pobreza_rural_moderada=ifelse(Small==1,Canasta_rural_moderada,0),
+         linea_de_pobreza_urbana_extrema=ifelse(Small==0,Canasta_urbana_extrema,0),
+         linea_de_pobreza_urbana_moderada=ifelse(Small==0,Canasta_urbana_moderada,0),
+         pobreza_rural_extrema_por_ingreso=ifelse(ING_COR<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_ingreso=ifelse(ING_COR<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_ingreso=ifelse(ING_COR<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_ingreso=ifelse(ING_COR<linea_de_pobreza_urbana_moderada,1,0),
+         pobreza_rural_extrema_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_urbana_moderada,1,0))
+
+Conc_2014_rural<-Conc_2014%>%
+  filter(Small==1)
+
+design_2014_rural<-svydesign(id=~UPM,strata = ~EST_DIS, weights = ~FACTOR_HOG,data = Conc_2014_rural)
+
+pobreza_rural_extrema_2014_por_ingreso<-round(svymean(~pobreza_rural_extrema_por_ingreso, design=design_2014_rural)*100,2)
+
+pobreza_rural_extrema_2014_por_ingreso
+
+pobreza_rural_moderada_2014_por_ingreso<-round(svymean(~pobreza_rural_moderada_por_ingreso, design=design_2014_rural)*100,2)
+
+pobreza_rural_moderada_2014_por_ingreso
+
+
+pobreza_rural_extrema_2014_por_consumo<-round(svymean(~pobreza_rural_extrema_por_consumo, design=design_2014_rural)*100,2)
+
+pobreza_rural_extrema_2014_por_consumo
+
+pobreza_rural_moderada_2014_por_consumo<-round(svymean(~pobreza_rural_moderada_por_consumo, design=design_2014_rural)*100,2)
+
+pobreza_rural_moderada_2014_por_consumo
+
+
+
+#### Urbanos
+
+
+
+Conc_2014_urbana<-Conc_2014%>%
+  filter(Small==0)
+
+design_2014_urbano<-svydesign(id=~UPM,strata = ~EST_DIS, weights = ~FACTOR_HOG,data = Conc_2014_urbana)
+
+pobreza_urbana_extrema_2014_por_ingreso<-round(svymean(~pobreza_urbana_extrema_por_ingreso, design=design_2014_urbano)*100,2)
+
+pobreza_urbana_extrema_2014_por_ingreso
+
+pobreza_urbana_moderada_2014_por_ingreso<-round(svymean(~pobreza_urbana_moderada_por_ingreso, design=design_2014_urbano)*100,2)
+
+pobreza_urbana_moderada_2014_por_ingreso
+
+pobreza_urbana_extrema_2014_por_consumo<-round(svymean(~pobreza_urbana_extrema_por_consumo, design=design_2014_urbano)*100,2)
+
+pobreza_urbana_extrema_2014_por_consumo
+
+pobreza_urbana_moderada_2014_por_consumo<-round(svymean(~pobreza_urbana_moderada_por_consumo, design=design_2014_urbano)*100,2)
+
+pobreza_urbana_moderada_2014_por_consumo
+
+
+
+
+########## 2016 ############
+library(foreign)
+library(tidyverse)
+library(plotly)
+library(htmlwidgets)
+library(reshape2)
+library(survey)
+options(survey.lonely.psu="adjust")
+
+###2016 rurales
+
+
+Conc_2016<-Conc_2016%>%
+  mutate(Canasta_rural_extrema=933.23*3,
+         Canasta_rural_moderada=1713.59*3,
+         Canasta_urbana_extrema=1310.99*3,
+         Canasta_urbana_moderada=2654.43*3)
+
+Conc_2016<-Conc_2016%>%
+  mutate(linea_de_pobreza_rural_extrema=ifelse(Small==1,Canasta_rural_extrema,0),
+         linea_de_pobreza_rural_moderada=ifelse(Small==1,Canasta_rural_moderada,0),
+         linea_de_pobreza_urbana_extrema=ifelse(Small==0,Canasta_urbana_extrema,0),
+         linea_de_pobreza_urbana_moderada=ifelse(Small==0,Canasta_urbana_moderada,0),
+         pobreza_rural_extrema_por_ingreso=ifelse(ING_COR<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_ingreso=ifelse(ING_COR<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_ingreso=ifelse(ING_COR<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_ingreso=ifelse(ING_COR<linea_de_pobreza_urbana_moderada,1,0),
+         pobreza_rural_extrema_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_urbana_moderada,1,0))
+
+Conc_2016_rural<-Conc_2016%>%
+  filter(Small==1)
+
+design_2016_rural<-svydesign(id=~UPM,strata = ~EST_DIS, weights = ~FACTOR_HOG,data = Conc_2016_rural)
+
+pobreza_rural_extrema_2016_por_ingreso<-round(svymean(~pobreza_rural_extrema_por_ingreso, design=design_2016_rural)*100,2)
+
+pobreza_rural_extrema_2016_por_ingreso
+
+pobreza_rural_moderada_2016_por_ingreso<-round(svymean(~pobreza_rural_moderada_por_ingreso, design=design_2016_rural)*100,2)
+
+pobreza_rural_moderada_2016_por_ingreso
+
+
+pobreza_rural_extrema_2016_por_consumo<-round(svymean(~pobreza_rural_extrema_por_consumo, design=design_2016_rural)*100,2)
+
+pobreza_rural_extrema_2016_por_consumo
+
+pobreza_rural_moderada_2016_por_consumo<-round(svymean(~pobreza_rural_moderada_por_consumo, design=design_2016_rural)*100,2)
+
+pobreza_rural_moderada_2016_por_consumo
+
+
+
+#### Urbanos
+
+
+
+Conc_2016_urbana<-Conc_2016%>%
+  filter(Small==0)
+
+design_2016_urbano<-svydesign(id=~UPM,strata = ~EST_DIS, weights = ~FACTOR_HOG,data = Conc_2016_urbana)
+
+pobreza_urbana_extrema_2016_por_ingreso<-round(svymean(~pobreza_urbana_extrema_por_ingreso, design=design_2016_urbano)*100,2)
+
+pobreza_urbana_extrema_2016_por_ingreso
+
+pobreza_urbana_moderada_2016_por_ingreso<-round(svymean(~pobreza_urbana_moderada_por_ingreso, design=design_2016_urbano)*100,2)
+
+pobreza_urbana_moderada_2016_por_ingreso
+
+pobreza_urbana_extrema_2016_por_consumo<-round(svymean(~pobreza_urbana_extrema_por_consumo, design=design_2016_urbano)*100,2)
+
+pobreza_urbana_extrema_2016_por_consumo
+
+pobreza_urbana_moderada_2016_por_consumo<-round(svymean(~pobreza_urbana_moderada_por_consumo, design=design_2016_urbano)*100,2)
+
+pobreza_urbana_moderada_2016_por_consumo
+
+
+
+
+########## 2018 ############
+library(foreign)
+library(tidyverse)
+library(plotly)
+library(htmlwidgets)
+library(reshape2)
+library(survey)
+options(survey.lonely.psu="adjust")
+
+###2018 rurales
+
+
+Conc_2018<-Conc_2018%>%
+  mutate(Canasta_rural_extrema=1073.69*3,
+         Canasta_rural_moderada=1941.01*3,
+         Canasta_urbana_extrema=1516.62*3,
+         Canasta_urbana_moderada=3001.17*3)
+
+Conc_2018<-Conc_2018%>%
+  mutate(linea_de_pobreza_rural_extrema=ifelse(Small==1,Canasta_rural_extrema,0),
+         linea_de_pobreza_rural_moderada=ifelse(Small==1,Canasta_rural_moderada,0),
+         linea_de_pobreza_urbana_extrema=ifelse(Small==0,Canasta_urbana_extrema,0),
+         linea_de_pobreza_urbana_moderada=ifelse(Small==0,Canasta_urbana_moderada,0),
+         pobreza_rural_extrema_por_ingreso=ifelse(ING_COR<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_ingreso=ifelse(ING_COR<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_ingreso=ifelse(ING_COR<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_ingreso=ifelse(ING_COR<linea_de_pobreza_urbana_moderada,1,0),
+         pobreza_rural_extrema_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_rural_extrema,1,0),
+         pobreza_rural_moderada_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_rural_moderada,1,0),
+         pobreza_urbana_extrema_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_urbana_extrema,1,0),
+         pobreza_urbana_moderada_por_consumo=ifelse(GASTO_MON<linea_de_pobreza_urbana_moderada,1,0))
+
+Conc_2018_rural<-Conc_2018%>%
+  filter(Small==1)
+
+design_2018_rural<-svydesign(id=~UPM,strata = ~EST_DIS, weights = ~FACTOR_HOG,data = Conc_2018_rural)
+
+pobreza_rural_extrema_2018_por_ingreso<-round(svymean(~pobreza_rural_extrema_por_ingreso, design=design_2018_rural)*100,2)
+
+pobreza_rural_extrema_2018_por_ingreso
+
+pobreza_rural_moderada_2018_por_ingreso<-round(svymean(~pobreza_rural_moderada_por_ingreso, design=design_2018_rural)*100,2)
+
+pobreza_rural_moderada_2018_por_ingreso
+
+
+pobreza_rural_extrema_2018_por_consumo<-round(svymean(~pobreza_rural_extrema_por_consumo, design=design_2018_rural)*100,2)
+
+pobreza_rural_extrema_2018_por_consumo
+
+pobreza_rural_moderada_2018_por_consumo<-round(svymean(~pobreza_rural_moderada_por_consumo, design=design_2018_rural)*100,2)
+
+pobreza_rural_moderada_2018_por_consumo
+
+
+
+#### Urbanos
+
+
+
+Conc_2018_urbana<-Conc_2018%>%
+  filter(Small==0)
+
+design_2018_urbano<-svydesign(id=~UPM,strata = ~EST_DIS, weights = ~FACTOR_HOG,data = Conc_2018_urbana)
+
+pobreza_urbana_extrema_2018_por_ingreso<-round(svymean(~pobreza_urbana_extrema_por_ingreso, design=design_2018_urbano)*100,2)
+
+pobreza_urbana_extrema_2018_por_ingreso
+
+pobreza_urbana_moderada_2018_por_ingreso<-round(svymean(~pobreza_urbana_moderada_por_ingreso, design=design_2018_urbano)*100,2)
+
+pobreza_urbana_moderada_2018_por_ingreso
+
+pobreza_urbana_extrema_2018_por_consumo<-round(svymean(~pobreza_urbana_extrema_por_consumo, design=design_2018_urbano)*100,2)
+
+pobreza_urbana_extrema_2018_por_consumo
+
+pobreza_urbana_moderada_2018_por_consumo<-round(svymean(~pobreza_urbana_moderada_por_consumo, design=design_2018_urbano)*100,2)
+
+pobreza_urbana_moderada_2018_por_consumo
+
+
+
